@@ -1,0 +1,44 @@
+# Use postgres/example user/password credentials
+
+services:
+  db-postgres-evento:
+    image: postgres:alpine
+    restart: always
+    ports:
+      - "5435:5432"
+    container_name: "db-postgres-evento"
+    volumes:
+      - ./banco-de-dados-evento-api:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: pgpassword
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "8080:80"
+    depends_on:
+      - db-postgres-evento
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api-node-evento
+    ports:
+      - "3001:3001"
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules # Evitar sobrescrever a pasta node_modules
+    depends_on:
+      - db-postgres-evento
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      NODE_ENV: development
+    command: "yarn start"
+
+volumes:
+  banco-de-dados-evento-api:
