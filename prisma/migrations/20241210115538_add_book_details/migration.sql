@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "Book" ADD COLUMN     "buyLink" TEXT NOT NULL DEFAULT '',
+ADD COLUMN     "coverImage" TEXT NOT NULL DEFAULT '',
+ADD COLUMN     "miniatura1" TEXT NOT NULL DEFAULT '',
+ADD COLUMN     "miniatura2" TEXT NOT NULL DEFAULT '';

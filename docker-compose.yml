@@ -23,22 +23,22 @@ services:
     depends_on:
       - db-postgres-evento
 
-  api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: api-node-evento
-    ports:
-      - "3001:3001"
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules # Evitar sobrescrever a pasta node_modules
-    depends_on:
-      - db-postgres-evento
-    environment:
-      DATABASE_URL: ${DATABASE_URL}
-      NODE_ENV: development
-    command: "yarn start"
+  # api:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: api-node-evento
+  #   ports:
+  #     - "3001:3001"
+  #   volumes:
+  #     - .:/usr/src/app
+  #     - /usr/src/app/node_modules # Evitar sobrescrever a pasta node_modules
+  #   depends_on:
+  #     - db-postgres-evento
+  #   environment:
+  #     DATABASE_URL: ${DATABASE_URL}
+  #     NODE_ENV: development
+  #   command: "yarn start"
 
 volumes:
   banco-de-dados-evento-api:

@@ -19,32 +19,38 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   name      String
-  email     String    @unique
+  email     String   @unique
   password  String
-  orders    Order[]   // Relacionamento com pedidos
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  orders    Order[] // Relacionamento com pedidos
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Book {
-  id        Int       @id @default(autoincrement())
-  title     String
-  author    String
-  price     Float
-  stock     Int
-  orders    Order[]   // Relacionamento com pedidos
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id           Int      @id @default(autoincrement())
+  title        String
+  author       String
+  price        Float
+  stock        Int
+  coverImage   String   @default("")
+  buyLink      String   @default("")
+  miniatura1   String   @default("")
+  miniatura2   String   @default("")
+  isBestSeller Boolean  @default(false)
+  isOnSale     Boolean  @default(false)
+  orders       Order[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model Order {
-  id        Int       @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   userId    Int
   bookId    Int
   quantity  Int
-  user      User      @relation(fields: [userId], references: [id])
-  book      Book      @relation(fields: [bookId], references: [id])
-  createdAt DateTime  @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  book      Book     @relation(fields: [bookId], references: [id])
+  createdAt DateTime @default(now())
 }
