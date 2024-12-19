@@ -55,7 +55,6 @@ export const getAllOrders = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      message: "Pedidos recuperados com sucesso",
       data: orders,
     });
   } catch (e) {

@@ -10,7 +10,7 @@ generator client {
 
 generator erd {
   provider = "prisma-erd-generator"
-  output   = "./erd.svg" // Local onde o diagrama será salvo
+  output   = "./erd.svg"
 }
 
 datasource db {
@@ -23,6 +23,7 @@ model User {
   name      String
   email     String   @unique
   password  String
+  isAdmin   Boolean  @default(false)
   orders    Order[] // Relacionamento com pedidos
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

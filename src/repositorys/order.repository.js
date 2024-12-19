@@ -53,18 +53,40 @@ export const getAll = async () => {
 export const getById = async (id) => {
   const order = await prisma.order.findUnique({
     where: {
-      id,
+      id: id,
     },
     include: {
-      user: true,
-      items: {
+      user: true, // Inclui os dados do usuário relacionado
+      orderItems: {
         include: {
-          book: true,
+          book: true, // Inclui os detalhes do livro para cada item do pedido
         },
       },
     },
   });
-  return order;
+
+  const formattedOrders = {
+      ...order,
+      createdAt: new Date(order.createdAt).toLocaleString("pt-BR", {
+        weekday: "long", // Dia da semana
+        year: "numeric", // Ano
+        month: "long", // Mês por extenso
+        day: "numeric", // Dia
+        hour: "2-digit", // Hora
+        minute: "2-digit", // Minuto
+        second: "2-digit", // Segundo
+      }),
+      updatedAt: new Date(order.updatedAt).toLocaleString("pt-BR", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }),
+    };
+  return formattedOrders;
 };
 
 export const updateOrder = async (id, data) => {
